@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
 from .models import Article
 from .serializers import ArticleSerializer
@@ -7,6 +8,7 @@ from .serializers import ArticleSerializer
 
 # Create your views here.
 
+@csrf_exempt
 def article_list(request):
 
     if request.method == 'GET':
