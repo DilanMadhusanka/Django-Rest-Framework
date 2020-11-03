@@ -18,10 +18,13 @@ from django.shortcuts import get_object_or_404
 
 class ArticleModelViewSet(viewsets.ModelViewSet):
     serializer_class = ArticleSerializer
-    # queryset = Article.objects.all()
 
     def get_queryset(self):
-        return Article.objects.filter(title='My Updated Title')
+        queryset = Article.objects.all()
+        title = self.request.query_params.get('name', None)
+        if title is not None:
+            queryset = queryset.filter(title=title)
+        return queryset
 
 
 class ArticleViewSet(viewsets.GenericViewSet, mixins.ListModelMixin, mixins.CreateModelMixin,
