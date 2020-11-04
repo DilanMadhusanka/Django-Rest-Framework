@@ -13,25 +13,29 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework import viewsets
 from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import filters
 
 
 # Create your views here.
 
+# class ArticleModelViewSet(viewsets.ModelViewSet):
+#     serializer_class = ArticleSerializer
+#     queryset = Article.objects.all()
+#     filter_backends = [IsTitleFilterBackend]
+
+
 class ArticleModelViewSet(viewsets.ModelViewSet):
     serializer_class = ArticleSerializer
     queryset = Article.objects.all()
-    filter_backends = [IsTitleFilterBackend]
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['title']
 
-
-# class ArticleModelViewSet(viewsets.ModelViewSet):
-#     serializer_class = ArticleSerializer
-#
-#     def get_queryset(self):
-#         queryset = Article.objects.all()
-#         title = self.request.query_params.get('name', None)
-#         if title is not None:
-#             queryset = queryset.filter(title=title)
-#         return queryset
+    # def get_queryset(self):
+    #     queryset = Article.objects.all()
+    #     title = self.request.query_params.get('name', None)
+    #     if title is not None:
+    #         queryset = queryset.filter(title=title)
+    #     return queryset
 
 
 class ArticleViewSet(viewsets.GenericViewSet, mixins.ListModelMixin, mixins.CreateModelMixin,
