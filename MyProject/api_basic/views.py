@@ -27,8 +27,10 @@ from rest_framework import filters
 class ArticleModelViewSet(viewsets.ModelViewSet):
     serializer_class = ArticleSerializer
     queryset = Article.objects.all()
-    filter_backends = [filters.SearchFilter]
-    search_fields = ['title']
+    filter_backends = [DjangoFilterBackend]
+    # filter_backends = [filters.SearchFilter]
+    # search_fields = ['title']
+    filterset_fields = ['title']
 
     # def get_queryset(self):
     #     queryset = Article.objects.all()
